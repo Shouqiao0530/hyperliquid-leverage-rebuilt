@@ -33,10 +33,7 @@ liquidation volume.
 Their liquidations are spread through the sample: only 9.3% of front-end
 liquidation volume occurs on October 10, compared with 79.7% for
 algorithmic market makers.</p>
-<p>Liquidations demand far more immediacy than voluntary exits. The average liquidation is $31.1 thousand and pays a 15.16 bps
-half-spread, while the loss-realizing close, the largest of the three voluntary purposes on both measures, averages $7,700
-and 0.92 bps. Liquidations also arrive in crowded moments: 83.9% share
-their millisecond timestamp with another wallet’s taker trade.</p>
+<p>Liquidations demand far more immediacy than voluntary exits. The average liquidation is $37.0 thousand and pays a 6.23 bps half-spread, while the loss-realizing close, the largest of the three voluntary purposes on both measures, averages $23,685 and 0.47 bps. Liquidations also arrive in crowded moments: 95.6% share their millisecond timestamp with another wallet’s taker trade.</p>
 <h3 id="trade-purpose-execution-conditions">Trade-Purpose Execution
 Conditions</h3>
 <table>
@@ -57,38 +54,35 @@ Conditions</h3>
 <tbody>
 <tr class="odd">
 <td>Opening</td>
-<td style="text-align: right;">+0.67</td>
-<td style="text-align: right;">5.5</td>
-<td style="text-align: right;">27.4</td>
+<td style="text-align: right;">+0.28</td>
+<td style="text-align: right;">9.7</td>
+<td style="text-align: right;">30.1</td>
 </tr>
 <tr class="even">
 <td>Gain-realizing close</td>
-<td style="text-align: right;">+0.69</td>
-<td style="text-align: right;">7.0</td>
-<td style="text-align: right;">30.0</td>
+<td style="text-align: right;">+0.31</td>
+<td style="text-align: right;">20.8</td>
+<td style="text-align: right;">32.8</td>
 </tr>
 <tr class="odd">
 <td>Loss-realizing close</td>
-<td style="text-align: right;">+0.92</td>
-<td style="text-align: right;">7.7</td>
-<td style="text-align: right;">32.0</td>
+<td style="text-align: right;">+0.47</td>
+<td style="text-align: right;">23.7</td>
+<td style="text-align: right;">36.2</td>
 </tr>
 <tr class="even">
 <td>Liquidation</td>
-<td style="text-align: right;">+15.16</td>
-<td style="text-align: right;">31.1</td>
-<td style="text-align: right;">83.9</td>
+<td style="text-align: right;">+6.23</td>
+<td style="text-align: right;">37.0</td>
+<td style="text-align: right;">95.6</td>
 </tr>
 </tbody>
 </table>
 <p><em>Notes.</em> March 27, 2025 to June 30, 2026, October 10 included.
 Ten coins, taker side. Values are computed within coin before equal-weight averaging. The last column is the probability that a taker trade shares its millisecond timestamp with a taker trade from at least one other wallet.</p>
-<p>Within the same coin-minute and at the same trade size, the liquidation premium is far smaller than the unconditional gap. Conditional on log trade size, order type and coin-day-minute fixed effects, the liquidation coefficient averages +1.99 bps for half-spread and +0.06 bps for slippage, against an unconditional liquidation half-spread of 15.16 bps. The two magnitudes are different estimands measured on different samples and are read alongside each other rather than differenced; the contrast is consistent with an important role for trade size and for the conditions prevailing in the minutes when liquidations arrive.</p>
-<p>The adverse price path continues after the forced sale. Outside
-October 10, liquidation price impact is −16.04 bps after 5 minutes and
-−28.48 bps after 120 minutes, while every voluntary trade purpose
-remains positive at the 120-minute horizon. October 10 deepens the
-120-minute liquidation path to −96.70 bps.</p>
+<p>Within the same coin-minute and at the same trade size, the liquidation premium is far smaller than the unconditional gap. Conditional on log trade size, order type and coin-day-minute fixed effects, the liquidation coefficient averages +1.99 bps for half-spread and +0.06 bps for slippage, against an unconditional liquidation half-spread of 6.23 bps. The two magnitudes are different estimands measured on different samples and are read alongside each other rather than differenced; the contrast is consistent with an important role for trade size and for the conditions prevailing in the minutes when liquidations arrive.</p>
+<p>The adverse price path continues after the forced sale. Outside October 10, liquidation price impact is −15.33 bps after 5 minutes and −28.32 bps after 120 minutes, while every voluntary trade purpose
+remains positive at the 120-minute horizon. October 10 deepens the 120-minute liquidation path to −40.46 bps.</p>
 <h3 id="post-trade-price-impact-by-trade-purpose">Post-Trade Price
 Impact by Trade Purpose</h3>
 <table>
@@ -113,48 +107,48 @@ Impact by Trade Purpose</h3>
 <tbody>
 <tr class="odd">
 <td>5 min</td>
-<td style="text-align: right;">+2.30</td>
-<td style="text-align: right;">+2.53</td>
-<td style="text-align: right;">+2.50</td>
-<td style="text-align: right;">−16.04</td>
-<td style="text-align: right;">+2.84</td>
+<td style="text-align: right;">+2.16</td>
+<td style="text-align: right;">+2.74</td>
+<td style="text-align: right;">+3.21</td>
+<td style="text-align: right;">−15.33</td>
+<td style="text-align: right;">+23.13</td>
 </tr>
 <tr class="even">
 <td>30 min</td>
-<td style="text-align: right;">+1.95</td>
-<td style="text-align: right;">+2.25</td>
-<td style="text-align: right;">+1.97</td>
-<td style="text-align: right;">−21.03</td>
-<td style="text-align: right;">−79.56</td>
+<td style="text-align: right;">+1.89</td>
+<td style="text-align: right;">+2.67</td>
+<td style="text-align: right;">+3.53</td>
+<td style="text-align: right;">−26.31</td>
+<td style="text-align: right;">−22.95</td>
 </tr>
 <tr class="odd">
 <td>60 min</td>
-<td style="text-align: right;">+2.26</td>
-<td style="text-align: right;">+2.61</td>
-<td style="text-align: right;">+0.69</td>
-<td style="text-align: right;">−24.21</td>
-<td style="text-align: right;">−97.68</td>
+<td style="text-align: right;">+1.34</td>
+<td style="text-align: right;">+3.25</td>
+<td style="text-align: right;">+2.33</td>
+<td style="text-align: right;">−28.18</td>
+<td style="text-align: right;">−49.38</td>
 </tr>
 <tr class="even">
 <td>120 min</td>
-<td style="text-align: right;">+2.00</td>
-<td style="text-align: right;">+2.54</td>
-<td style="text-align: right;">+0.66</td>
-<td style="text-align: right;">−28.48</td>
-<td style="text-align: right;">−96.70</td>
+<td style="text-align: right;">+0.20</td>
+<td style="text-align: right;">+3.20</td>
+<td style="text-align: right;">+4.54</td>
+<td style="text-align: right;">−28.32</td>
+<td style="text-align: right;">−40.46</td>
 </tr>
 <tr class="odd">
 <td>Notional ($B)</td>
-<td style="text-align: right;">1,364</td>
-<td style="text-align: right;">644</td>
-<td style="text-align: right;">704</td>
-<td style="text-align: right;">33.5</td>
-<td style="text-align: right;">37.5</td>
+<td style="text-align: right;">492</td>
+<td style="text-align: right;">248</td>
+<td style="text-align: right;">279</td>
+<td style="text-align: right;">16.8</td>
+<td style="text-align: right;">18.7</td>
 </tr>
 </tbody>
 </table>
 <p><em>Notes.</em> March 27, 2025 to June 30, 2026. Entries are basis
-points of the notional in the final row. Liquidation is shown with and without October 10. Including that day, the column opens at +2.84 bps at 5 minutes and is −79.56 bps at 30 minutes: October 10 carries $4.0 billion of liquidation notional at prices that were still falling, so its trades enter the 5-minute average before the fall registers and dominate every later horizon. From 30 minutes on the crash day deepens a path that is already adverse without it; at 5 minutes the two conventions disagree in sign.</p>
+points of the notional in the final row. Liquidation is shown with and without October 10. Including that day, the column opens at +23.13 bps at 5 minutes and is −22.95 bps at 30 minutes: October 10 carries $4.0 billion of liquidation notional at prices that were still falling, so its trades enter the 5-minute average before the fall registers and dominate every later horizon. From 30 minutes on the crash day deepens a path that is already adverse without it; at 5 minutes the two conventions disagree in sign.</p>
 <p>Auto-deleveraging returns part of the forced-exit transfer to
 profitable positions on the opposite side. Front-end traders receive
 $117.58 million through ADL against $343.66 million of liquidation
@@ -387,4 +381,4 @@ liquidation.</p>
 <figure><img src="figs/lev_cum_m120_algo.png" alt="Cumulative 120-minute markout of algorithmic takers by leverage cohort"></figure>
 <p class="figcap"><strong>Appendix Figure D. Algorithmic takers.</strong> Axes, panels and cohort construction as in Appendix Figure B, cut on this group’s own equal-volume leverage quintiles. <span class="src">Source <code>equal_vol_percoin_coinuser_grouped_trade/algo/agg/cumulative_m120_and_bps.png</code>.</span></p>
 <p class="tnote"><span class="todo">Appendix Figures A, B, C and D use an orange ramp. The section’s convention is one hue per group, purple for front-end, blue for algorithmic takers, green for market makers. Repalette before publication, and relabel their “timing” axes as price impact.</span></p>
-</main><script>(function(){var b=document.body,n=document.getElementById('sidebar'),t=document.getElementById('navtoggle'),K='lev-nav';function set(open,store){n.classList.toggle('collapsed',!open);b.classList.toggle('nav-collapsed',!open);t.setAttribute('aria-expanded',open?'true':'false');t.textContent=open?'✕':'☰';if(store){try{localStorage.setItem(K,open?'open':'closed')}catch(e){}}}var v=null;try{v=localStorage.getItem(K)}catch(e){}set(v?v==='open':window.innerWidth>900,false);t.addEventListener('click',function(){set(n.classList.contains('collapsed'),true)});})();</script><p style="font-size:0.85em;color:#555;margin-top:2.5em;border-top:1px solid #ddd;padding-top:0.8em">Rebuilt 2026-09-22 on the new cohort split (k from k_by_day_v6 with flagged rows removed and the Allium-anchored 2025-09-28 to 10-19 days; Retail boundaries 0.097 / 0.150 / 0.251 / 0.382; 298,265 front-end wallets). Figures, Tables L1 to L4, Appendix Tables A and C and the sentences quoting them are from this build. Not rebuilt and kept from the published version: the two trade-purpose execution tables, the three-group liquidation-loss shares and ADL totals, Appendix Table B, the fee-regression coefficients, the wallet-life dollar figures in the closing paragraphs, and the 0.31% reconciliation error.</p></body></html>
+</main><script>(function(){var b=document.body,n=document.getElementById('sidebar'),t=document.getElementById('navtoggle'),K='lev-nav';function set(open,store){n.classList.toggle('collapsed',!open);b.classList.toggle('nav-collapsed',!open);t.setAttribute('aria-expanded',open?'true':'false');t.textContent=open?'✕':'☰';if(store){try{localStorage.setItem(K,open?'open':'closed')}catch(e){}}}var v=null;try{v=localStorage.getItem(K)}catch(e){}set(v?v==='open':window.innerWidth>900,false);t.addEventListener('click',function(){set(n.classList.contains('collapsed'),true)});})();</script><p style="font-size:0.85em;color:#555;margin-top:2.5em;border-top:1px solid #ddd;padding-top:0.8em">Rebuilt 2026-09-22 on the new cohort split (k from k_by_day_v6 with flagged rows removed and the Allium-anchored 2025-09-28 to 10-19 days; Retail boundaries 0.097 / 0.150 / 0.251 / 0.382; 298,265 front-end wallets). Figures, Tables L1 to L4, Appendix Tables A and C and the sentences quoting them are from this build. The two trade-purpose tables are recomputed at grouped-trade grain (one row per order execution), so average notional is larger than the published fill-grain figure. Not rebuilt and kept from the published version: the three-group liquidation-loss shares and ADL totals, Appendix Table B, the fee-regression coefficients, the wallet-life dollar figures in the closing paragraphs, and the 0.31% reconciliation error.</p></body></html>
