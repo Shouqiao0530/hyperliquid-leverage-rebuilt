@@ -1,0 +1,390 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Leverage and Liquidations: Proposed Section Rewrite</title><style>
+:root{--ink:#1f2928;--muted:#687773;--line:#d8e3e0;--paper:#fff;--side:#f5f9f8;--accent:#118b7c;--accent2:#22a998;--placeholder:#e7f7f4;--placeholder-line:#2aa896;--todo:#1a56c4}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.58}
+nav{position:fixed;inset:0 auto 0 0;width:236px;padding:46px 12px 22px;background:var(--side);border-right:1px solid var(--line);overflow:auto;transition:width .16s ease,padding .16s ease;z-index:10}
+nav.collapsed{width:0;padding-left:0;padding-right:0;overflow:hidden;border-right:none}.navtoggle{position:fixed;left:9px;top:9px;z-index:30;width:29px;height:29px;border:1px solid #c9d8d4;background:#fff;border-radius:7px;color:var(--accent);cursor:pointer;font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center}.navtoggle:hover{background:var(--placeholder)}nav.collapsed .navcontent{opacity:0}.navcontent{transition:opacity .12s ease}nav h1{font-size:13px;color:var(--accent);margin:0 0 9px}nav a{display:block;text-decoration:none;color:#40514d;font-size:11.7px;line-height:1.25;padding:4px 1px}nav a:hover{color:var(--accent)}nav a.navext{margin-top:14px;padding-top:9px;border-top:1px solid var(--line);color:var(--accent)}nav a.navext:hover{text-decoration:underline}
+main{max-width:none;margin-left:236px;padding:38px 54px 110px;transition:margin-left .16s ease}body.nav-collapsed main{margin-left:0;padding-left:52px}h1{font-size:31px;line-height:1.15;margin:0 0 22px}h2{font-size:23px;margin-top:46px;padding-top:9px;border-top:1px solid var(--line)}h3{font-size:17.5px;margin-top:30px}p{margin:11px 0}table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0 7px;white-space:nowrap;display:block;overflow-x:auto}th,td{padding:6px 7px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}th:first-child,td:first-child{text-align:left}thead th{border-top:2px solid #34443f;border-bottom:1.5px solid #657570}tbody tr:last-child td{border-bottom:2px solid #34443f}em{color:#44534f}.figure-placeholder{margin:23px 0 28px;padding:18px 20px;border:1.5px solid var(--placeholder-line);background:var(--placeholder);border-radius:8px;color:#244f49;box-shadow:0 1px 0 rgba(17,139,124,.04)}.figure-placeholder strong{color:#0c7367}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em}figure{margin:22px 0 8px}figure img{width:100%;max-width:1500px;display:block;border:1px solid var(--line);border-radius:4px}.figcap{font-size:12.6px;color:#44534f;margin:8px 0 26px;max-width:1500px;line-height:1.5}.figcap strong{color:var(--ink)}.tnote{font-size:12.4px;color:#44534f;margin:6px 0 26px;max-width:1500px;line-height:1.5}.todo,.src,.src code{color:var(--todo)}.math{font-style:italic;white-space:nowrap}.eqn{text-align:center;margin:14px 0;font-size:15.5px}.defbox{background:var(--placeholder);border-left:3px solid var(--accent);padding:12px 18px 4px;margin:20px 0 26px;max-width:1500px}.defbox h3{margin:0 0 6px;font-size:15px;color:#0c7367}.defbox ul{margin:0 0 10px 20px;padding:0;font-size:14px;line-height:1.5}.defbox li{margin:3px 0}@media(max-width:900px){nav{width:min(230px,78vw)}main{margin-left:0;padding:30px 18px 90px}body.nav-collapsed main{margin-left:0;padding:30px 18px 90px}table{font-size:12.2px}}
+</style></head><body><button id="navtoggle" class="navtoggle" aria-label="Show or hide the contents menu" aria-expanded="true" title="Show or hide the contents menu">☰</button><nav id="sidebar"><div class="navcontent"><h1>Section Rewrite</h1><a href="#abstract-proposed-revision">Abstract</a><a href="#introduction-replacement-leverage-paragraph">Introduction</a><a href="#liquidations">Liquidations</a><a href="#trade-purpose-execution-conditions" style="padding-left:11px" title="Trade-Purpose Execution Conditions">Execution conditions</a><a href="#post-trade-price-impact-by-trade-purpose" style="padding-left:11px" title="Post-Trade Price Impact by Trade Purpose">Post-trade price impact</a><a href="#leverage">Leverage</a><a href="#table-l1.-leverage-cohorts" style="padding-left:11px" title="L1. Front-End Leverage Cohorts">L1. Leverage cohorts</a><a href="#table-l2.-leverage-and-account-characteristics" style="padding-left:11px" title="L2. Leverage and Account Characteristics">L2. Account characteristics</a><a href="#table-l3.-cohort-ledger" style="padding-left:11px" title="L3. Dollar Profit and Loss by Leverage Cohort">L3. Dollar profit and loss</a><a href="#table-l4.-liquidation-incidence-and-price-path" style="padding-left:11px" title="L4. Liquidation Incidence and Price Path by Leverage Cohort">L4. Liquidation incidence and prices</a><a href="#appendix-leverage-construction-and-robustness">Appendix</a><a href="#appendix-table-a.-within-wallet-leverage-transitions" style="padding-left:11px" title="Table A. Where a Wallet’s Opening Volume Falls, by Its Lifetime Leverage Cohort">Table A. Leverage transitions</a><a href="#appendix-table-b.-outcomes-on-common-leverage-support" style="padding-left:11px">Table B. Outcomes at Matched Leverage</a><a href="#appendix-table-c.-markout-and-timing-by-trade-purpose" style="padding-left:11px" title="Table C. Markout and Its Price-Impact Component by Trade Purpose, Horizon and Leverage Cohort">Table C. Markout by trade purpose</a><a href="#appendix-figure-a.-timing-by-horizon" style="padding-left:11px" title="Figure A. Front-End Taker Price Impact by Horizon, Trade Purpose and Leverage Cohort">Figure A. Taker price impact by purpose</a><a href="#appendix-figure-b.-cumulative-markout-frontend" style="padding-left:11px" title="Figure B. Cumulative M₁₂₀ of Front-End Traders by Leverage Cohort">Figure B. Front-end cumulative markout</a><a href="#appendix-figures-c-d.-cumulative-markout-by-group" style="padding-left:11px" title="Figures C and D. Cumulative M₁₂₀ of Algorithmic Market Makers and Algorithmic Takers by Leverage Cohort">Figures C, D. Other groups, cumulative</a><a class="navext" href="leverage_section_v7.html" target="_blank" rel="noopener" title="Leverage Section — Wrap-up Review: the full evidence page this section is drawn from, opens in a new tab">Full wrap-up review ↗</a></div></nav><main><h1 id="rewrite-plan">Leverage and Liquidations: Proposed Section Rewrite</h1>
+<p class="tnote">Draft prose and exhibits for the leverage subsection and its appendix. Created September 9, 2026; updated September 16, 2026. Text in blue marks a decision for the authors, or a source path to remove before publication. <span class="src"><code>Allium/experiments/leverage/leverage_cohort/wrapup_2026-09-06/report/leverage_rewrite.html</code></span></p>
+<h2 id="abstract-proposed-revision">Abstract: proposed revision</h2>
+<p>Perpetual futures trade largely outside reporting infrastructure, so
+who loses is unknown. On Hyperliquid, a decentralized venue with a
+complete on-chain record, we classify wallets by how they trade;
+front-end traders, whom we interpret as predominantly retail, lose $1.11
+billion over 15 months. Fees account for $725 million of that loss, net
+forced exits $226 million, and voluntary trading $154 million. Front-end flow follows recent returns, and the post-trade price impact
+of their voluntary taker trades decays with horizon, reverting past zero
+after loss-realizing closes. Front-end traders also run far more leverage, and their leverage use is persistent within wallets: median opening leverage is 7.4×, against 2.0× for algorithmic takers and 1.1× for algorithmic market makers. We sort front-end wallets into five cohorts of equal taker volume. The share of closing volume that ends in a forced liquidation rises from 0.87% in the lowest-leverage cohort to 6.72% in the highest, and the share of wallets liquidated at least once rises from 12% to 53%. The median position is liquidated after the market has moved 13.3% against it in the lowest cohort and 1.8% in the highest. The two highest cohorts carry 43% of the five cohorts’ net trading loss on 11% of their equity.</p>
+<h2 id="introduction-replacement-leverage-paragraph">Introduction: replacement leverage paragraph</h2>
+<p>Leverage is a persistent trading choice at the wallet level and is
+much higher among front-end traders. Median opening leverage is 7.4× for front-end traders, compared with 2.0× for algorithmic takers and 1.1× for algorithmic market makers. Within the front-end population, the
+lowest- and highest-leverage cohorts open at median leverage of 2.7× and 20.7×, respectively, and a wallet tends to remain near its lifetime
+leverage range when it trades. On voluntary taker trades, the 120-minute markout M<sub>120</sub> falls from +1.95 bps of notional in Q1 to −1.29 bps in Q5. After fees, and counting maker, liquidation and auto-deleveraging trades, Q1 loses $45 million and Q5 loses $134 million. The share of closing volume that ends in a liquidation rises from 0.32% to 7.00%, and liquidation notional rises from $1.62 billion to $8.28 billion. Higher leverage also brings the liquidation boundary much
+closer: the median Q5 position is liquidated after the underlying has
+moved 1.8% against it from its average entry price, while the median Q1 position survives a 13.3% adverse move before liquidation. High leverage is liquidated often and after shallow moves. Low leverage is liquidated rarely, and mostly during extreme price moves near the bottom: in the largest liquidation episodes, its liquidations lose a further 672 bps over the following 2 hours, against 12 bps for the highest cohort. Losing is not the end of the story: the lowest-leverage cohort withdraws $422 million more than it deposits over wallet life, while every higher-leverage cohort is a net depositor.</p>
+<div class="defbox"><h3>Terms used throughout</h3><ul><li><strong>Front-end traders, algorithmic takers, algorithmic market makers.</strong> The three wallet classes assigned daily by the classification of Section 5.1, from order type, cancellation behaviour and maker share. Front-end traders are those trading through the exchange’s own web interface, and we interpret them as predominantly retail.</li><li><strong>Trade purpose.</strong> Every fill is an opening trade, a gain-realizing close, a loss-realizing close, a liquidation, or an auto-deleveraging fill. Reversals are folded into the leg they close.</li><li><strong>Half-spread.</strong> The distance from the mid at the trade to the fill price, in basis points of notional, signed so that a positive value is a cost to the trader.</li><li><strong>Execution cost.</strong> Same quantity as a contribution to profit and loss, so negative. It does not depend on the horizon.</li><li><strong>Price impact, T<sub>120</sub>.</strong> The price move from the mid at the trade to the mid 120 minutes later, signed in the trade’s direction, in basis points of notional.</li><li><strong>Markout, M<sub>120</sub>.</strong> Price impact plus execution cost, equivalently the move from the fill price to the mid 120 minutes later. Positive means the price kept moving the trade’s way.</li><li><strong>Slippage.</strong> The distance from the first-level price available at the trade to the average fill price, in basis points, which is what a trade pays for walking the book.</li><li><strong>Standardized effective leverage, k.</strong> The account’s maintenance margin divided by its equity E, read just after the trade:
+<div class="eqn"><span class="math">k</span> = (1/<span class="math">E</span>) · Σ<sub><span class="math">c</span></sub> [ |<span class="math">N<sub>c</sub></span>| / (2 <span class="math">L<sub>c</sub><sup>max</sup></span>) − <span class="math">d<sub>c</sub></span> ],&nbsp;&nbsp; <span class="math">N<sub>c</sub></span> = position size × mark price.</div>
+The sum runs over the account’s cross-margined positions; an isolated position uses its own margin as E. L<sub>c</sub><sup>max</sup> is coin c’s maximum leverage. Under Hyperliquid’s margin tiers, a position whose notional passes a tier’s lower bound gets a lower maximum leverage, and d<sub>c</sub> is the tier’s maintenance deduction, which keeps the margin continuous at the bound; d<sub>c</sub> = 0 in the first tier. The exchange liquidates at k = 1. A fresh single-coin position at leverage &#8467; has k = &#8467; / (2 L<sup>max</sup>), so 10× on ETH is k = 0.20 and k = 0.5 is the coin’s maximum leverage. <span class="todo">The cohort cut used here takes L<sup>max</sup> from each coin’s top tier and sets d<sub>c</sub> = 0, which matters only for positions above the first tier bound.</span></li><li><strong>Leverage cohort, Q1 to Q5.</strong> For each front-end wallet, the volume-weighted median of min(k, 1) over its opening trades. Wallets are sorted on this median into five groups of equal front-end taker volume, Q1 the lowest. Table L1 gives the boundaries.</li><li><strong>Auto-deleveraging.</strong> The protocol closing a profitable position on the opposite side when a liquidation cannot clear against the book. It transfers value at the group level and does not return it to the liquidated wallet.</li></ul></div>
+<h2 id="liquidations">Liquidations</h2>
+<p>Forced exits concentrate on front-end traders. Front-end traders bear
+80.1% of the liquidation losses recorded for the three labeled groups, and
+outside October 10, 2025, the day of the marketwide liquidation cascade, they account for 97.6% of three-group
+liquidation volume.
+Their liquidations are spread through the sample: only 9.3% of front-end
+liquidation volume occurs on October 10, compared with 79.7% for
+algorithmic market makers.</p>
+<p>Liquidations demand far more immediacy than voluntary exits. The average liquidation is $31.1 thousand and pays a 15.16 bps
+half-spread, while the loss-realizing close, the largest of the three voluntary purposes on both measures, averages $7,700
+and 0.92 bps. Liquidations also arrive in crowded moments: 83.9% share
+their millisecond timestamp with another wallet’s taker trade.</p>
+<h3 id="trade-purpose-execution-conditions">Trade-Purpose Execution
+Conditions</h3>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 26%" />
+<col style="width: 26%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Trade purpose</th>
+<th style="text-align: right;">Half-spread (bps)</th>
+<th style="text-align: right;">Average trade notional ($k)</th>
+<th style="text-align: right;">Trades sharing their timestamp with another wallet’s taker trade (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Opening</td>
+<td style="text-align: right;">+0.67</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">27.4</td>
+</tr>
+<tr class="even">
+<td>Gain-realizing close</td>
+<td style="text-align: right;">+0.69</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">30.0</td>
+</tr>
+<tr class="odd">
+<td>Loss-realizing close</td>
+<td style="text-align: right;">+0.92</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">32.0</td>
+</tr>
+<tr class="even">
+<td>Liquidation</td>
+<td style="text-align: right;">+15.16</td>
+<td style="text-align: right;">31.1</td>
+<td style="text-align: right;">83.9</td>
+</tr>
+</tbody>
+</table>
+<p><em>Notes.</em> March 27, 2025 to June 30, 2026, October 10 included.
+Ten coins, taker side. Values are computed within coin before equal-weight averaging. The last column is the probability that a taker trade shares its millisecond timestamp with a taker trade from at least one other wallet.</p>
+<p>Within the same coin-minute and at the same trade size, the liquidation premium is far smaller than the unconditional gap. Conditional on log trade size, order type and coin-day-minute fixed effects, the liquidation coefficient averages +1.99 bps for half-spread and +0.06 bps for slippage, against an unconditional liquidation half-spread of 15.16 bps. The two magnitudes are different estimands measured on different samples and are read alongside each other rather than differenced; the contrast is consistent with an important role for trade size and for the conditions prevailing in the minutes when liquidations arrive.</p>
+<p>The adverse price path continues after the forced sale. Outside
+October 10, liquidation price impact is −16.04 bps after 5 minutes and
+−28.48 bps after 120 minutes, while every voluntary trade purpose
+remains positive at the 120-minute horizon. October 10 deepens the
+120-minute liquidation path to −96.70 bps.</p>
+<h3 id="post-trade-price-impact-by-trade-purpose">Post-Trade Price
+Impact by Trade Purpose</h3>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Horizon</th>
+<th style="text-align: right;">Opening</th>
+<th style="text-align: right;">Gain-realizing close</th>
+<th style="text-align: right;">Loss-realizing close</th>
+<th style="text-align: right;">Liquidation ex Oct-10</th>
+<th style="text-align: right;">Liquidation incl. Oct-10</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>5 min</td>
+<td style="text-align: right;">+2.30</td>
+<td style="text-align: right;">+2.53</td>
+<td style="text-align: right;">+2.50</td>
+<td style="text-align: right;">−16.04</td>
+<td style="text-align: right;">+2.84</td>
+</tr>
+<tr class="even">
+<td>30 min</td>
+<td style="text-align: right;">+1.95</td>
+<td style="text-align: right;">+2.25</td>
+<td style="text-align: right;">+1.97</td>
+<td style="text-align: right;">−21.03</td>
+<td style="text-align: right;">−79.56</td>
+</tr>
+<tr class="odd">
+<td>60 min</td>
+<td style="text-align: right;">+2.26</td>
+<td style="text-align: right;">+2.61</td>
+<td style="text-align: right;">+0.69</td>
+<td style="text-align: right;">−24.21</td>
+<td style="text-align: right;">−97.68</td>
+</tr>
+<tr class="even">
+<td>120 min</td>
+<td style="text-align: right;">+2.00</td>
+<td style="text-align: right;">+2.54</td>
+<td style="text-align: right;">+0.66</td>
+<td style="text-align: right;">−28.48</td>
+<td style="text-align: right;">−96.70</td>
+</tr>
+<tr class="odd">
+<td>Notional ($B)</td>
+<td style="text-align: right;">1,364</td>
+<td style="text-align: right;">644</td>
+<td style="text-align: right;">704</td>
+<td style="text-align: right;">33.5</td>
+<td style="text-align: right;">37.5</td>
+</tr>
+</tbody>
+</table>
+<p><em>Notes.</em> March 27, 2025 to June 30, 2026. Entries are basis
+points of the notional in the final row. Liquidation is shown with and without October 10. Including that day, the column opens at +2.84 bps at 5 minutes and is −79.56 bps at 30 minutes: October 10 carries $4.0 billion of liquidation notional at prices that were still falling, so its trades enter the 5-minute average before the fall registers and dominate every later horizon. From 30 minutes on the crash day deepens a path that is already adverse without it; at 5 minutes the two conventions disagree in sign.</p>
+<p>Auto-deleveraging returns part of the forced-exit transfer to
+profitable positions on the opposite side. Front-end traders receive
+$117.58 million through ADL against $343.66 million of liquidation
+losses, leaving $226.08 million of net forced-exit losses. The next
+subsection asks which front-end wallets reach this boundary.</p>
+<h2 id="leverage">Leverage</h2>
+<p class="tnote"><em>Sample.</em> This subsection uses fills from September 27, 2025 to June 30, 2026. The paper’s main sample opens on March 27, 2025, so this subsection starts six months later and covers 277 of its 461 days. Leverage k needs the account equity behind each trade, which only the exchange’s daily account snapshots provide, and those snapshots begin on September 27, 2025.</p>
+<p>We measure leverage with k, the account’s maintenance margin over its equity just after the trade, defined in the terms above. For each front-end wallet we take the volume-weighted median of min(k, 1) over its opening trades, and we sort wallets on that median into five cohorts of equal front-end taker volume, Q1 the lowest. Table L1 gives the cohort boundaries and where the wallets sit inside them.</p>
+<h3 id="table-l1.-leverage-cohorts">Table L1. Front-End Leverage Cohorts</h3>
+<table>
+<thead>
+<tr><th></th><th style="text-align: right;">Q1</th><th style="text-align: right;">Q2</th><th style="text-align: right;">Q3</th><th style="text-align: right;">Q4</th><th style="text-align: right;">Q5</th></tr>
+</thead>
+<tbody>
+<tr><td>k range</td><td style="text-align: right;">0 – 0.097</td><td style="text-align: right;">0.097 – 0.150</td><td style="text-align: right;">0.150 – 0.251</td><td style="text-align: right;">0.251 – 0.382</td><td style="text-align: right;">0.382 – 1</td></tr>
+<tr><td>Wallets</td><td style="text-align: right;">82,500</td><td style="text-align: right;">39,439</td><td style="text-align: right;">44,531</td><td style="text-align: right;">42,010</td><td style="text-align: right;">89,785</td></tr>
+<tr><td>Wallet median k (p25 | p50 | p75)</td><td style="text-align: right;">0.024 | 0.044 | 0.063</td><td style="text-align: right;">0.109 | 0.125 | 0.129</td><td style="text-align: right;">0.180 | 0.201 | 0.233</td><td style="text-align: right;">0.255 | 0.288 | 0.334</td><td style="text-align: right;">0.484 | 0.504 | 0.516</td></tr>
+</tbody>
+</table>
+<p class="tnote"><em>Notes.</em> Ten coins, September 27, 2025 to June 30, 2026, October 10 excluded. Wallet median k is the wallet’s volume-weighted median of min(k, 1) over its opening trades; the last row gives its percentiles across the cohort’s wallets. Q5 bunches at k = 0.5, the coin’s maximum leverage. <span class="src">Source <code>tables/cohort_thresholds_by_population.csv</code>, <code>descriptives_by_cohort_retail.csv</code>.</span></p>
+<p>Front-end traders run more leverage than the algorithmic groups, and the gap is wide at every point of the distribution. Median effective leverage at the opening trade is 7.4× for front-end traders, 2.0× for algorithmic takers and 1.1× for algorithmic market makers, and the interquartile range is 3.4×–15.1× against 1.0×–5.0× and 0.6×–2.2×. Only 20% of front-end taker volume comes from wallets inside the Q1 range of k, against 53% of algorithmic-taker volume and 93% of market-maker volume. That difference is why a marketwide fall is the only thing that reaches a market maker’s liquidation boundary, and why 79.7% of market-maker liquidation volume falls on October 10, 2025 alone.</p>
+<p>Within front-end traders, higher leverage is run by much smaller accounts. The five cohorts hold equal taker volume by construction, while median opening leverage rises from 2.7× in Q1 to 20.7× in Q5. Only the taker side is equalized: maker volume falls from $61.6 billion in Q1 to $23.3 billion in Q5, not monotonically, so the taker share of a cohort’s own volume rises from 77% to 90% and the higher-leverage cohorts do less of their trading by posting. Median active-day account equity falls from $148 to $19 over the same cohorts, while the median wallet’s average trade rises from $284 to $1,075. Trade size therefore rises as the account behind it shrinks: the median wallet trades 1.3 times its account equity per trade in Q1 and 26 times in Q5. Higher-leverage wallets are also newer and shorter-lived, with a median life of 27 calendar days against 47 to 64 days in the other cohorts. They are alike on trading frequency, placing 2.7 to 3.7 trades per active day across the cohorts.</p>
+<h3 id="table-l2.-leverage-and-account-characteristics">Table L2. Leverage and Account Characteristics (p25 | median | p75)</h3>
+<p><strong>Panel A. Trader groups</strong></p>
+<table>
+<thead>
+<tr><th>Group</th><th style="text-align: right;">Wallet median k</th><th style="text-align: right;">Opening leverage (×)</th><th style="text-align: right;">Taker volume in Q1 range (%)</th></tr>
+</thead>
+<tbody>
+<tr><td>Front-end traders</td><td style="text-align: right;">0.080 | 0.210 | 0.451</td><td style="text-align: right;">3.4 | 7.4 | 15.1</td><td style="text-align: right;">20</td></tr>
+<tr><td>Algorithmic takers</td><td style="text-align: right;">0.041 | 0.118 | 0.251</td><td style="text-align: right;">1.0 | 2.0 | 5.0</td><td style="text-align: right;">53</td></tr>
+<tr><td>Algorithmic market makers</td><td style="text-align: right;">0.025 | 0.067 | 0.150</td><td style="text-align: right;">0.6 | 1.1 | 2.2</td><td style="text-align: right;">93</td></tr>
+</tbody>
+</table>
+<p><strong>Panel B. Front-end leverage cohorts</strong></p>
+<table>
+<thead>
+<tr><th></th><th style="text-align: right;">Q1</th><th style="text-align: right;">Q2</th><th style="text-align: right;">Q3</th><th style="text-align: right;">Q4</th><th style="text-align: right;">Q5</th></tr>
+</thead>
+<tbody>
+<tr><td>Opening leverage (×)</td><td style="text-align: right;">1.3 | 2.7 | 4.9</td><td style="text-align: right;">3.2 | 5.3 | 9.0</td><td style="text-align: right;">4.8 | 8.4 | 14.1</td><td style="text-align: right;">6.9 | 12.0 | 19.2</td><td style="text-align: right;">12.1 | 20.7 | 34.5</td></tr>
+<tr><td>Taker volume ($B)</td><td style="text-align: right;">207.5</td><td style="text-align: right;">205.4</td><td style="text-align: right;">209.6</td><td style="text-align: right;">207.6</td><td style="text-align: right;">207.5</td></tr>
+<tr><td>Maker volume ($B)</td><td style="text-align: right;">61.6</td><td style="text-align: right;">39.3</td><td style="text-align: right;">49.0</td><td style="text-align: right;">36.1</td><td style="text-align: right;">23.3</td></tr>
+<tr><td>Taker share (%)</td><td style="text-align: right;">77.1</td><td style="text-align: right;">83.9</td><td style="text-align: right;">81.1</td><td style="text-align: right;">85.2</td><td style="text-align: right;">89.9</td></tr>
+<tr><td>Account equity ($)</td><td style="text-align: right;">98 | 148 | 12</td><td style="text-align: right;">100 | 154 | 9</td><td style="text-align: right;">98 | 125 | 7</td><td style="text-align: right;">58 | 71 | 3</td><td style="text-align: right;">20 | 19 | 0</td></tr>
+<tr><td>Life (days)</td><td style="text-align: right;">8 | 49 | 140</td><td style="text-align: right;">13 | 64 | 164</td><td style="text-align: right;">12 | 56 | 157</td><td style="text-align: right;">9 | 47 | 142</td><td style="text-align: right;">4 | 27 | 107</td></tr>
+<tr><td>Trades per active day</td><td style="text-align: right;">1.9 | 2.7 | 6.5</td><td style="text-align: right;">1.9 | 3.0 | 6.5</td><td style="text-align: right;">2.0 | 3.4 | 7.5</td><td style="text-align: right;">2.0 | 3.5 | 7.1</td><td style="text-align: right;">2.0 | 3.7 | 7.0</td></tr>
+<tr><td>Average trade size ($)</td><td style="text-align: right;">47 | 284 | 1,980</td><td style="text-align: right;">166 | 870 | 4,342</td><td style="text-align: right;">230 | 1,096 | 5,214</td><td style="text-align: right;">291 | 1,260 | 5,470</td><td style="text-align: right;">294 | 1,075 | 4,493</td></tr>
+<tr><td>Trade size over equity (×)</td><td style="text-align: right;">0.47 | 1.3 | 3.2</td><td style="text-align: right;">1.4 | 3.7 | 8.6</td><td style="text-align: right;">2.2 | 5.9 | 14</td><td style="text-align: right;">4.4 | 11 | 24</td><td style="text-align: right;">11 | 26 | 56</td></tr>
+</tbody>
+</table>
+<p class="tnote"><em>Notes.</em> Ten coins, September 27, 2025 to June 30, 2026, October 10 excluded. Percentiles are across wallets, each wallet counting once. Opening leverage is effective leverage at the opening trade, on (wallet, coin, day) cells weighted by opening notional and capped at twice the coin’s maximum. Taker share is the cohort’s taker volume over its taker plus maker volume. The account-equity row instead gives three medians of day-end account value: on the wallet’s first active day, across its active days, and on its last active day; it excludes the 1.1% of wallets with no snapshot. Life runs from first to last trade, in calendar days. Trade size over equity uses each wallet’s active-day median equity, so it is not the ratio of the two rows above it. <span class="src">Source <code>tables/k_quantiles_by_population.csv</code>, <code>open_leverage_quantiles_by_population.csv</code>, <code>population_share_in_frontend_bands.csv</code>, <code>descriptives_by_cohort_retail.csv</code>, <code>equity_av_by_cohort.csv</code> and <code>equal_vol_volweighted_lifetime_median_grouped_trade/retail/tables/volume_by_cohort.csv</code>, scope <code>agg</code>.</span></p>
+<p>Leverage use is persistent within wallets. 67% of Q1 opening volume and 77% of Q5 opening volume falls in the wallet’s own cohort range of k, and 73%–92% of every cohort’s opening volume falls in its own range or an adjacent one (Appendix Table A). We therefore use the median effective leverage at opening trades as a wallet characteristic and compare outcomes across these cohorts.</p>
+<p>Trading outcomes deteriorate with leverage, and the deterioration is in the price path after the trade rather than in execution cost. At the 120-minute horizon, front-end takers’ markouts on voluntary trades fall from +1.95 bps in Q1 to between −0.77 and −1.31 bps in Q3 to Q5 (Table L3). Execution cost stays in a narrow 2.14–2.58 bps range with no leverage order, while price impact T₁₂₀ falls from +4.51 to +0.85 bps. Splitting price impact by trade purpose locates the gradient in the opening trade, and shows that the cohorts trade into the same states: every cohort opens after the price has already moved 3 to 7 bps in the direction of the fill and realizes losses after an adverse move of about 30 bps, and they separate only after the fill (Appendix Table C and Appendix Figure A). The loss accrues steadily through the sample rather than in a few events, on the taker book above all but on the maker book as well (Appendix Figure B).</p>
+<p>Each front-end cohort earns from price impact and pays execution cost, fees and liquidation losses, and every cohort’s total is a loss (Table L3). Fees of $66 million to $86 million are the largest cost in every cohort, and the net loss runs from $45 million in Q1 to $108 million to $161 million in Q3 to Q5. Relative to the capital behind the trades, the gradient is far steeper: Q4 and Q5 carry 43% of the five cohorts’ net loss on 11% of their equity.</p>
+<h3 id="table-l3.-cohort-ledger">Table L3. Dollar Profit and Loss by Leverage Cohort ($ millions)</h3>
+<table>
+<thead>
+<tr><th></th><th style="text-align: right;">Q1</th><th style="text-align: right;">Q2</th><th style="text-align: right;">Q3</th><th style="text-align: right;">Q4</th><th style="text-align: right;">Q5</th></tr>
+</thead>
+<tbody>
+<tr><td>T<sub>120</sub><sup>taker</sup></td><td style="text-align: right;">+92.9 (+4.51)</td><td style="text-align: right;">+52.6 (+2.59)</td><td style="text-align: right;">+23.1 (+1.12)</td><td style="text-align: right;">+28.8 (+1.42)</td><td style="text-align: right;">+16.9 (+0.85)</td></tr>
+<tr><td>EC<sup>taker</sup></td><td style="text-align: right;">−53.2 (−2.58)</td><td style="text-align: right;">−51.3 (−2.53)</td><td style="text-align: right;">−50.1 (−2.42)</td><td style="text-align: right;">−44.4 (−2.19)</td><td style="text-align: right;">−42.6 (−2.14)</td></tr>
+<tr><td>M<sub>120</sub><sup>taker</sup></td><td style="text-align: right;">+40.0 (+1.95)</td><td style="text-align: right;">+1.3 (+0.06)</td><td style="text-align: right;">−27.0 (−1.31)</td><td style="text-align: right;">−15.7 (−0.77)</td><td style="text-align: right;">−25.6 (−1.29)</td></tr>
+<tr><td>M<sub>120</sub><sup>maker</sup></td><td style="text-align: right;">+32.0</td><td style="text-align: right;">+18.9</td><td style="text-align: right;">−10.0</td><td style="text-align: right;">−7.2</td><td style="text-align: right;">−9.3</td></tr>
+<tr><td>M<sub>120</sub><sup>Liq</sup></td><td style="text-align: right;">−91.7</td><td style="text-align: right;">−89.0</td><td style="text-align: right;">−53.9</td><td style="text-align: right;">−24.2</td><td style="text-align: right;">−14.5</td></tr>
+<tr><td>M<sub>120</sub><sup>ADL</sup></td><td style="text-align: right;">+51.5</td><td style="text-align: right;">+22.5</td><td style="text-align: right;">+7.1</td><td style="text-align: right;">+14.6</td><td style="text-align: right;">+1.9</td></tr>
+<tr><td>Total M<sub>120</sub></td><td style="text-align: right;">+31.8</td><td style="text-align: right;">−46.3</td><td style="text-align: right;">−83.9</td><td style="text-align: right;">−32.5</td><td style="text-align: right;">−47.5</td></tr>
+<tr><td>Fees</td><td style="text-align: right;">−77.0</td><td style="text-align: right;">−66.4</td><td style="text-align: right;">−76.6</td><td style="text-align: right;">−75.4</td><td style="text-align: right;">−86.0</td></tr>
+<tr><td>Net</td><td style="text-align: right;">−45.1</td><td style="text-align: right;">−112.6</td><td style="text-align: right;">−160.5</td><td style="text-align: right;">−107.9</td><td style="text-align: right;">−133.5</td></tr>
+<tr><td>Share of net loss (%)</td><td style="text-align: right;">8.1</td><td style="text-align: right;">20.1</td><td style="text-align: right;">28.7</td><td style="text-align: right;">19.3</td><td style="text-align: right;">23.9</td></tr>
+<tr><td>Share of equity (%)</td><td style="text-align: right;">59.0</td><td style="text-align: right;">17.6</td><td style="text-align: right;">12.6</td><td style="text-align: right;">6.1</td><td style="text-align: right;">4.7</td></tr>
+</tbody>
+</table>
+<p class="tnote"><em>Notes.</em> Ten coins, September 27, 2025 to June 30, 2026, every date included. Rows follow the paper’s decomposition table. Parentheses: bps of the cohort’s voluntary taker notional. Taker rows cover voluntary taker trades; the maker, liquidation and ADL rows are mutually exclusive; Total M<sub>120</sub> sums all trades. Net is Total M<sub>120</sub> plus fees. Share of equity uses each wallet’s active-day median account equity, summed over the cohort. <span class="todo">Funding F<sub>120</sub> is not included: no 120-minute funding series covers this window. The paper’s appendix puts it below 0.02 bps of taker volume in every cohort.</span> <span class="src">Source <code>tables/cohort_ledger_pnl_split.csv</code>, built by <code>code/build_cohort_ledger.py</code> from <code>data/extracts/user_coin_bucket/</code>.</span></p>
+<p>Higher leverage changes how positions close. The share of closing volume that ends in a liquidation rises 8-fold across the cohorts, from 0.87% in Q1 to 6.72% in Q5, and the share of wallets liquidated at least once rises from 12% in Q1 to 53% in Q5. Liquidation notional rises with it, from $1.62 billion to $8.28 billion. High-leverage liquidations arrive on ordinary trading days: outside October 10, half of Q5 liquidation notional falls on 43 days, against 2 days for Q1, and 28.5% of Q1 liquidation notional falls on October 10 alone, against 3.8% of Q5 (Table L4).</p>
+<p>The price move it takes to close a position falls sharply with leverage, for voluntary exits but even more for forced ones. The entry-to-exit return is the price return from the position’s average entry price to the closing fill, signed by the position direction so that a negative value means the market moved against the position. The median liquidation follows a 13.3% adverse move in Q1 and a 1.8% adverse move in Q5, a 8-fold difference. The median loss-realizing close follows a 0.5% adverse move in Q1 and a 0.3% adverse move in Q5, a 1.5-fold difference.</p>
+<p>Low-leverage wallets are liquidated rarely, but the liquidations that do occur are more adverse. They arrive in larger liquidation episodes with sharper price moves. A liquidation episode is a run of liquidations in one coin, across all wallets, with no gap longer than 15 minutes. Ranking episodes by liquidation notional, the 146 largest together hold half of all liquidation notional, and each has at least $26 million of liquidations. These 146 episodes hold 83% of Q1 liquidation notional and 33% of Q5’s. The median Q1 liquidated dollar sits in an episode with $479 million of liquidations across all wallets and a 8.3% price range, against $14 million and 1.3% for Q5. The price then comes back against the forced sale. Inside the 146 largest episodes, the 120-minute markout on liquidation orders averages −672 bps across Q1 wallets and −12 bps across Q5 wallets; outside them it is −51 bps and −11 bps.</p>
+<h3 id="table-l4.-liquidation-incidence-and-price-path">Table L4. Liquidation Incidence and Price Path by Leverage Cohort</h3>
+<table>
+<thead>
+<tr><th></th><th style="text-align: right;">Q1</th><th style="text-align: right;">Q2</th><th style="text-align: right;">Q3</th><th style="text-align: right;">Q4</th><th style="text-align: right;">Q5</th></tr>
+</thead>
+<tbody>
+<tr><td colspan="6"><strong>Incidence</strong></td></tr>
+<tr><td>Liquidation share of closing volume (%)</td><td style="text-align: right;">0.87</td><td style="text-align: right;">1.23</td><td style="text-align: right;">1.81</td><td style="text-align: right;">3.27</td><td style="text-align: right;">6.72</td></tr>
+<tr><td>Wallets liquidated at least once (%)</td><td style="text-align: right;">12.4</td><td style="text-align: right;">31.4</td><td style="text-align: right;">41.0</td><td style="text-align: right;">48.9</td><td style="text-align: right;">52.9</td></tr>
+<tr><td>Liquidation notional ($B)</td><td style="text-align: right;">1.62</td><td style="text-align: right;">2.52</td><td style="text-align: right;">3.07</td><td style="text-align: right;">4.72</td><td style="text-align: right;">8.28</td></tr>
+<tr><td>Share on October 10 (%)</td><td style="text-align: right;">28.5</td><td style="text-align: right;">40.3</td><td style="text-align: right;">23.2</td><td style="text-align: right;">14.6</td><td style="text-align: right;">3.8</td></tr>
+<tr><td>Days holding 50% / 80%</td><td style="text-align: right;">2 / 12</td><td style="text-align: right;">6 / 30</td><td style="text-align: right;">20 / 65</td><td style="text-align: right;">33 / 86</td><td style="text-align: right;">43 / 113</td></tr>
+<tr><td colspan="6"><strong>Liquidation episodes</strong></td></tr>
+<tr><td>Share in the 146 largest (%)</td><td style="text-align: right;">83.4</td><td style="text-align: right;">74.4</td><td style="text-align: right;">53.6</td><td style="text-align: right;">40.3</td><td style="text-align: right;">33.4</td></tr>
+<tr><td>Episode notional ($M)</td><td style="text-align: right;">479</td><td style="text-align: right;">116</td><td style="text-align: right;">32</td><td style="text-align: right;">20</td><td style="text-align: right;">14</td></tr>
+<tr><td>Episode price range (%)</td><td style="text-align: right;">8.3</td><td style="text-align: right;">6.2</td><td style="text-align: right;">2.3</td><td style="text-align: right;">1.9</td><td style="text-align: right;">1.3</td></tr>
+<tr><td colspan="6"><strong>Median entry-to-exit return (%)</strong></td></tr>
+<tr><td>Gain-realizing close</td><td style="text-align: right;">+0.7</td><td style="text-align: right;">+0.7</td><td style="text-align: right;">+0.8</td><td style="text-align: right;">+0.7</td><td style="text-align: right;">+0.5</td></tr>
+<tr><td>Loss-realizing close</td><td style="text-align: right;">−0.5</td><td style="text-align: right;">−0.6</td><td style="text-align: right;">−0.7</td><td style="text-align: right;">−0.6</td><td style="text-align: right;">−0.3</td></tr>
+<tr><td>Liquidation</td><td style="text-align: right;">−13.3</td><td style="text-align: right;">−8.0</td><td style="text-align: right;">−5.1</td><td style="text-align: right;">−3.0</td><td style="text-align: right;">−1.8</td></tr>
+<tr><td colspan="6"><strong>Liquidation M₁₂₀ (bps)</strong></td></tr>
+<tr><td>Inside the 146 largest episodes</td><td style="text-align: right;">−672</td><td style="text-align: right;">−410</td><td style="text-align: right;">−224</td><td style="text-align: right;">−71</td><td style="text-align: right;">−12</td></tr>
+<tr><td>Outside them</td><td style="text-align: right;">−51</td><td style="text-align: right;">−36</td><td style="text-align: right;">−26</td><td style="text-align: right;">−17</td><td style="text-align: right;">−11</td></tr>
+</tbody>
+</table>
+<p class="tnote"><em>Notes.</em> Ten coins, September 27, 2025 to June 30, 2026. Every date is included except in two blocks: the concentration row counts days outside October 10, and the entry-to-exit block excludes October 10. Episode notional and price range are medians, over the cohort’s liquidation notional, of the episode each liquidation sits in, counting every episode; the price range is the highest minus the lowest liquidation fill price, over the first. The entry-to-exit return is s(p<sub>f</sub>/p<sub>i</sub> − 1), with p<sub>i</sub> the average entry price recovered from closed PnL, p<sub>f</sub> the closing fill price and s the position direction; it is a median across closing trades. Liquidation M₁₂₀ is each wallet’s notional-weighted markout, averaged across wallets. <span class="src">Source <code>tables/liq_concentration_by_day.csv</code>, <code>adv_move_quantiles.csv</code>, <code>liq_cascade_contrast.csv</code> (<code>code/build_cascade_contrast.py</code>).</span></p>
+<p>Inside a large liquidation episode, the two highest-leverage cohorts are liquidated earlier. The first quarter of an episode’s total liquidation notional holds 41% of Q5’s liquidated notional in that episode and 32% of Q4’s, against 25% to 28% for Q1 to Q3 (Figure L1). The first half holds 60% and 54%, against 43% to 46%.</p>
+<figure><img src="figs/lev_cascade_progress.png" alt="Cumulative share of each leverage cohort's liquidation notional against progress through the liquidation episode"></figure>
+<p class="figcap"><strong>Figure L1. When each leverage cohort is liquidated inside a large liquidation episode.</strong> The 146 largest episodes, every date. Horizontal axis: share of the episode’s all-wallet liquidation notional already executed. <em>Top</em>: cumulative share of the cohort’s own liquidation notional in the episode; the dashed diagonal is a cohort liquidated evenly. <em>Bottom</em>: the top curve minus the diagonal. The dotted line marks a quarter of the episode. <span class="src">Figure <code>figures/lev_cascade_progress.png</code>, built by <code>code/build_cascade_contrast.py</code>.</span></p>
+<p>Q1 to Q3 stay close to the even spread through the first third of an episode and fall behind it afterwards. Q4 and Q5 are 10 to 15 percentage points ahead by a quarter of the episode and stay ahead until about 85% of it.</p>
+<p>A single large cascade shows the same ordering inside one event. On October 10, 2025, BTC fell 10.7% from 20:28 to 21:21 UTC, its largest drawdown of the window, and the front-end group was liquidated for $976 million of BTC notional in those 53 minutes. The cascade arrives in two rounds. The two highest-leverage cohorts are taken in the first round: a quarter of Q4 and Q5 notional is liquidated by minute 28, against minute 45 or later for Q1, Q2 and Q3, and their volume-weighted average execution price is 6.2% and 5.3% below the episode start, against 8.0% to 8.5% for the three lower cohorts. The reversal follows the depth: BTC recovers to 3.3% below the start 2 hours after the trough, so the 120-minute markout on these liquidations is −171 bps for Q5 and −604 bps for Q1. Q5 also loses a larger share of its position: 59% of the BTC long notional it held going into the episode, against 16% for Q1.</p>
+<figure><img src="figs/lev_oct10_cascade.png" alt="BTC 2025-10-10 liquidation cascade by leverage cohort"></figure>
+<p class="figcap"><strong>Figure L2. The October 10, 2025 BTC cascade by leverage cohort.</strong> All front-end liquidation fills in BTC between 20:28 and 21:21 UTC, taker and maker, both sides, ADL excluded: 5,977 fills from 3,964 wallets, 40% of the notional maker-side. <em>Panel A</em>: each cohort’s bar spans the minutes in which the middle half of its liquidation notional executes, drawn at its volume-weighted average execution price; the dot marks half done. The shaded band is the episode. <em>Panel D</em>: the flow divided by the BTC long notional the cohort held at its last position snapshot before the episode, at the episode-start price. <span class="src">Figure <code>figures/lev_oct10_cascade.png</code>, table <code>tables/oct10_cascade_by_cohort.csv</code>.</span></p>
+<p class="tnote"><span class="todo">To settle before publication: this is one episode, on October 10. It illustrates the mechanism and is not a sample statistic. Either label it as such in the caption, or move it to the appendix and keep Table L4 and Figure L1 as the section’s liquidation evidence.</span></p>
+<p>A leverage limit of the kind the European Union’s markets regulator has said would apply to retail perpetuals would bind on exactly the high-leverage wallets: accounts whose median equity is under $30, opening at a median 20×, and losing more than their starting stake over a life of a few weeks (Figure L3, Panel B). On the other hand, such a limit may not prevent the lowest-leverage cohort from being liquidated during extreme price moves. That cost comes from being liquidated late in those moves, not from the leverage the wallet chose.</p>
+<p>Every cohort loses money over the life of the wallet, and the loss grows with leverage relative to the capital the wallet starts with. Account equity net of deposits is the change in day-end account value less the change in net deposits since the first active day. It is therefore the wallet’s cumulative dollar profit and loss from trading: closed and unrealized PnL, net of fees and funding. By the last active day, the median wallet has lost 46% of its first-day account equity in Q1, 92% in Q2, 99% in Q3, 104% in Q4 and 115% in Q5 (Figure L3, Panel B). In dollars the median loss is $87 in Q1, $189 in Q2, $184 in Q3, $234 in Q4 and $120 in Q5. The loss builds up over the whole life rather than on the final day. The median wallet’s account equity net of deposits changes by $1 to $3 on its last active day, measured against its previous active day. Still, 12% of Q1 wallets and 16% to 18% of Q2 to Q5 wallets lose more than half of their first-day account equity on that last day.</p>
+<figure><img src="figs/lev_life_equity.png" style="max-width:700px" alt="Median account equity net of deposits over the life of a front-end wallet, in dollars and as a share of first-day account equity"></figure>
+<p class="figcap"><strong>Figure L3. Account equity net of deposits over the life of a front-end wallet, by leverage cohort.</strong> Front-end wallets whose life spans more than 10 calendar days. Horizontal axis: fraction of the wallet’s life, read at day round(x × (life − 1)), so x = 1 is the last active day; the 10-day floor keeps a short life from putting rounding steps in the median. <em>Panel A</em>: median across wallets of the change in day-end account value minus the change in net deposits since the first active day. <em>Panel B</em>: the same quantity divided by the wallet’s account value on its first active day, on wallets with a positive first-day value. Ten coins, September 27, 2025 to June 30, 2026, every date. <span class="src">Source <code>tables/life_networth_by_cohort.csv</code>; figure built by <code>code/build_life_equity_figs.py</code>.</span></p>
+<p>What the wallets do next splits by leverage. Q1 is a net withdrawer over wallet life, taking out $422 million more than it deposits. Every higher-leverage cohort is a net depositor, from $66 million in Q2 to $233 million in Q4 (Figure L4). The share of wallets that finish as net withdrawers falls from 30% in Q1 to 22% in Q5. A loss above 100% of first-day account equity is possible only by depositing again, and the median Q4 and Q5 wallets end past that line (Figure L3, Panel B). A quarter of Q5 wallets end more than 560% of their first-day account equity below their deposits, against 123% in Q1.</p>
+<figure><img src="figs/lev_net_deposits_total.png" style="max-width:700px" alt="Cohort total deposits minus withdrawals over the life of a front-end wallet"></figure>
+<p class="figcap"><strong>Figure L4. Deposits minus withdrawals over the life of a front-end wallet, cohort total, by leverage cohort.</strong> All front-end wallets. Horizontal axis as in Figure L3. Q1’s total moves in large steps because a few large accounts carry it. Ten coins, September 27, 2025 to June 30, 2026, every date. <span class="src">Source <code>tables/life_paths_normalized_closed_pnl.csv</code>, column <code>sum_net_deposits_usd</code>; figure built by <code>code/build_life_equity_figs.py</code>.</span></p>
+<p>Losing is not the end of the story. The high-leverage cohorts keep depositing while their losses accumulate, and as cohorts they put more money in than they take out.</p>
+<h2 id="appendix-leverage-construction-and-robustness">Appendix: Leverage Construction and Robustness</h2>
+<p>The appendix reports the within-wallet transition matrix behind the persistence result, the three-group comparison at matched leverage, the horizon-by-purpose ladder behind Table L3 and the figures the main text cites, together with the construction checks for k. The leverage measure also reproduces the exchange’s liquidation
+boundary. Reconciliation against daily account snapshots has a median
+error of 0.31%, and the realized equity-change distribution places the
+liquidation mass at the boundary implied by opening utilization.</p>
+<h3 id="appendix-table-a.-within-wallet-leverage-transitions">Appendix Table A. Where a Wallet’s Opening Volume Falls, by Its Lifetime Leverage Cohort</h3>
+<p>The two extreme cohorts hold their leverage from day to day: 67% of Q1 opening volume and 77% of Q5 opening volume falls in the wallet’s own lifetime band. The middle cohorts spread into their neighbours, holding 31% to 40% in their own band, and every cohort keeps between 73% and 92% of its opening volume in its own band or the band next to it. Q5 is the most concentrated because it opens at the coin’s maximum leverage day after day.</p>
+<table>
+<thead>
+<tr><th>Lifetime cohort</th><th style="text-align: right;">Coin-day in the Q1 band</th><th style="text-align: right;">Q2 band</th><th style="text-align: right;">Q3 band</th><th style="text-align: right;">Q4 band</th><th style="text-align: right;">Q5 band</th></tr>
+</thead>
+<tbody>
+<tr><td>Q1</td><td style="text-align: right;">66.6</td><td style="text-align: right;">15.7</td><td style="text-align: right;">9.2</td><td style="text-align: right;">3.8</td><td style="text-align: right;">4.7</td></tr>
+<tr><td>Q2</td><td style="text-align: right;">29.0</td><td style="text-align: right;">30.8</td><td style="text-align: right;">24.1</td><td style="text-align: right;">8.1</td><td style="text-align: right;">8.0</td></tr>
+<tr><td>Q3</td><td style="text-align: right;">11.5</td><td style="text-align: right;">16.0</td><td style="text-align: right;">36.1</td><td style="text-align: right;">20.7</td><td style="text-align: right;">15.6</td></tr>
+<tr><td>Q4</td><td style="text-align: right;">3.4</td><td style="text-align: right;">5.8</td><td style="text-align: right;">19.8</td><td style="text-align: right;">39.6</td><td style="text-align: right;">31.5</td></tr>
+<tr><td>Q5</td><td style="text-align: right;">1.6</td><td style="text-align: right;">1.8</td><td style="text-align: right;">4.7</td><td style="text-align: right;">14.5</td><td style="text-align: right;">77.4</td></tr>
+</tbody>
+</table>
+<p class="tnote"><em>Notes.</em> September 27, 2025 to June 30, 2026, 10 coins, October 10 excluded. Front-end wallets. Each row is a lifetime cohort and cells are that cohort’s share of opening notional, so rows sum to 100. The band of a (wallet, coin, day) cell is the cohort interval its volume-weighted median leverage after opening trades falls in, using the boundaries of Table L1. <span class="src">Source <code>tables/k_day_transition_retail.csv</code>.</span></p>
+<p>The leverage cohorts sort front-end wallets against each other, which leaves open whether the gradient is a leverage effect or a front-end effect. Appendix Table B holds leverage fixed and compares the three groups inside the same absolute leverage band. All three groups carry economically meaningful volume across the range, so the comparison is on common support rather than on an extrapolation.</p>
+<p>The two components paid at the fill are measured precisely, and both favour the algorithmic groups. Front-end traders pay more in fees than market makers in all 7 bands, by 2.10 bps in the lowest band and 0.91 bps in the highest; the gap is smaller at high leverage than at low, but it is not monotone across the bands in between. They pay more in execution cost than market makers in 5 of the 7 bands, and that gap closes at the top, +0.25 bps with a 95% interval of [−0.43, +0.97]. Neither component depends on the markout horizon.</p>
+<p>The 120-minute markout is too noisy to rank the groups. The front-end minus market-maker gap in the price-impact component contains zero in 6 of the 7 bands, but its confidence intervals are 5 to 20 bps wide, so the data is uninformative rather than evidence of equality. Read the markout column as a level and not as a ranking; the market-maker figures of +14.50 bps at k = 0.050–0.089 and +7.49 bps at k above 0.299 rest on $6.1 billion and $3.3 billion of volume from 422 and 1,049 wallets and carry intervals of the same width. The one comparison that is both large and precisely estimated is the forced exit. At leverage above k = 0.299, liquidations are 6.23% of front-end closing volume, with a 95% interval of [5.49, 6.97], against 0.31% [0.14, 0.55] for market makers and 2.28% [1.10, 3.84] for algorithmic takers, so 20 times the market-maker rate and 2.7 times the algorithmic-taker rate at the same leverage. Leverage does not explain the whole gap between groups.</p>
+<h3 id="appendix-table-b.-outcomes-on-common-leverage-support">Appendix Table B. Outcomes at Matched Leverage</h3>
+<table>
+<thead>
+<tr><th>Leverage band, wallet  k</th><th style="text-align: right;">Taker volume ($B)</th><th style="text-align: right;">Wallets</th><th style="text-align: right;">120-min markout (bps)</th><th style="text-align: right;">Fees (bps)</th><th style="text-align: right;">Liquidation share of closing volume (%)</th></tr>
+</thead>
+<tbody>
+<tr><td>k &lt; 0.011</td><td style="text-align: right;">11.1 | 10.2 | 3.2</td><td style="text-align: right;">7,917 | 517 | 1,056</td><td style="text-align: right;">+0.87 | +1.36 | −0.34</td><td style="text-align: right;">−3.89 | −1.79 | −2.67</td><td style="text-align: right;">3.18 | 0.00 | 0.08</td></tr>
+<tr><td>0.011 – 0.024</td><td style="text-align: right;">19.0 | 29.5 | 12.1</td><td style="text-align: right;">10,457 | 438 | 824</td><td style="text-align: right;">−1.37 | +0.89 | +4.93</td><td style="text-align: right;">−3.72 | −1.68 | −2.85</td><td style="text-align: right;">1.45 | 0.00 | 0.09</td></tr>
+<tr><td>0.024 – 0.034</td><td style="text-align: right;">51.4 | 8.2 | 2.9</td><td style="text-align: right;">6,794 | 254 | 554</td><td style="text-align: right;">−0.36 | +0.22 | +2.35</td><td style="text-align: right;">−2.67 | −1.94 | −2.43</td><td style="text-align: right;">0.86 | 0.01 | 0.02</td></tr>
+<tr><td>0.034 – 0.050</td><td style="text-align: right;">34.2 | 8.2 | 2.4</td><td style="text-align: right;">10,844 | 309 | 868</td><td style="text-align: right;">−0.92 | +1.97 | +0.31</td><td style="text-align: right;">−3.54 | −1.75 | −3.23</td><td style="text-align: right;">0.55 | 0.02 | 0.02</td></tr>
+<tr><td>0.050 – 0.089</td><td style="text-align: right;">98.5 | 6.1 | 3.4</td><td style="text-align: right;">17,715 | 422 | 1,638</td><td style="text-align: right;">+1.27 | +14.50 | −1.54</td><td style="text-align: right;">−3.29 | −2.59 | −3.45</td><td style="text-align: right;">0.84 | 0.44 | 0.07</td></tr>
+<tr><td>0.089 – 0.299</td><td style="text-align: right;">302.5 | 2.3 | 22.9</td><td style="text-align: right;">54,342 | 762 | 2,302</td><td style="text-align: right;">−1.25 | +0.96 | −0.85</td><td style="text-align: right;">−3.41 | −2.90 | −3.00</td><td style="text-align: right;">1.74 | 0.61 | 0.39</td></tr>
+<tr><td>k &gt; 0.299</td><td style="text-align: right;">189.9 | 3.3 | 8.5</td><td style="text-align: right;">105,668 | 1,049 | 2,599</td><td style="text-align: right;">−1.43 | +7.49 | −2.39</td><td style="text-align: right;">−3.97 | −3.06 | −3.22</td><td style="text-align: right;"><strong>6.23 | 0.31 | 2.28</strong></td></tr>
+</tbody>
+</table>
+<p class="tnote"><em>Notes.</em> Every cell reports front-end traders | algorithmic market makers | algorithmic takers. Taker side only. Bands are cut on a log-k grid so that each band holds at least $2.3 billion of taker volume and at least 250 wallets in each of the three groups; 7 bands clear that rule. The 120-minute markout is the price move from the fill to the mid 2 hours later, signed in the trade’s direction. Liquidation share of closing volume is a volume statistic and does not depend on the markout horizon. 95% intervals come from a 1,000-replication paired day-block bootstrap and are quoted in the text for the comparisons the section relies on. <span class="src">Source <code>shouqiao-data/reports/same_k_newk_full.md</code>.</span></p>
+<p class="tnote"><span class="todo">Built on a leverage measure taken over all listed instruments and on a 211-day window, both different from the rest of the section. Rebuild on the paper’s 10-coin leverage and window before publication; the bands and the ordering are not expected to move.</span></p>
+<p>The behavioral falsification is whether highly levered wallets reach
+liquidation because they keep adding to losing positions. They do not.
+Across cohorts, the share of notional that adds to an existing position
+falls as the liquidation boundary approaches; inside 100 bps, only
+8%–19% adds, while 55%–84% closes at a loss. The high-leverage
+liquidation pattern is therefore generated by the margin arithmetic of a
+thin account, not by a surge in averaging down immediately before
+liquidation.</p>
+<h3 id="appendix-table-c.-markout-and-timing-by-trade-purpose">Appendix Table C. Markout and Its Price-Impact Component by Trade Purpose, Horizon and Leverage Cohort</h3>
+<p>Table L3 reports the markout on the cohort’s whole voluntary taker book. Splitting it by trade purpose locates the leverage gradient in the opening trade. At 2 hours the opening markout runs +2.64, −2.30, −4.04, −2.24 and −3.55 bps from Q1 to Q5, so the lowest-leverage cohort is the only one whose openings are still profitable, and the gradient is present at every horizon from 30 minutes on. The two closing purposes carry no leverage order at any horizon. The price-impact panel shows why the cohorts look alike inside a purpose: every cohort opens after the price has already moved 3 to 6 bps in the direction of the fill and realizes losses after an adverse move of 31 to 34 bps, and what separates them is the price path after the trade rather than the state they trade into.</p>
+<p><strong>Panel A. Markout, bps of the purpose’s taker volume</strong></p>
+<table>
+<thead>
+<tr><th>Horizon</th><th style="text-align: right;">Q1</th><th style="text-align: right;">Q2</th><th style="text-align: right;">Q3</th><th style="text-align: right;">Q4</th><th style="text-align: right;">Q5</th></tr>
+</thead>
+<tbody>
+<tr><td colspan="6"><strong>Opening</strong>&nbsp;&nbsp;<span style="font-weight:400;color:#687773">taker volume $B, Q1 to Q5: 98.2 | 99.4 | 98.9 | 98.3 | 96.9</span></td></tr>
+<tr><td>+5 min</td><td style="text-align: right;">+0.62</td><td style="text-align: right;">+0.23</td><td style="text-align: right;">+0.21</td><td style="text-align: right;">−0.30</td><td style="text-align: right;">−0.33</td></tr>
+<tr><td>+30 min</td><td style="text-align: right;">+1.89</td><td style="text-align: right;">+0.25</td><td style="text-align: right;">−0.78</td><td style="text-align: right;">−0.82</td><td style="text-align: right;">−1.52</td></tr>
+<tr><td>+60 min</td><td style="text-align: right;">+2.73</td><td style="text-align: right;">−1.02</td><td style="text-align: right;">−2.09</td><td style="text-align: right;">−1.49</td><td style="text-align: right;">−1.87</td></tr>
+<tr><td>+120 min</td><td style="text-align: right;">+2.64</td><td style="text-align: right;">−2.30</td><td style="text-align: right;">−4.04</td><td style="text-align: right;">−2.24</td><td style="text-align: right;">−3.55</td></tr>
+<tr><td colspan="6"><strong>Gain-realizing close</strong>&nbsp;&nbsp;<span style="font-weight:400;color:#687773">taker volume $B, Q1 to Q5: 51.6 | 51.8 | 46.2 | 43.3 | 41.0</span></td></tr>
+<tr><td>+5 min</td><td style="text-align: right;">+1.25</td><td style="text-align: right;">+0.78</td><td style="text-align: right;">−0.21</td><td style="text-align: right;">+0.22</td><td style="text-align: right;">−0.26</td></tr>
+<tr><td>+30 min</td><td style="text-align: right;">+1.78</td><td style="text-align: right;">+0.08</td><td style="text-align: right;">−0.80</td><td style="text-align: right;">−0.05</td><td style="text-align: right;">+0.08</td></tr>
+<tr><td>+60 min</td><td style="text-align: right;">+2.28</td><td style="text-align: right;">+0.44</td><td style="text-align: right;">+0.40</td><td style="text-align: right;">+0.89</td><td style="text-align: right;">+0.48</td></tr>
+<tr><td>+120 min</td><td style="text-align: right;">+3.35</td><td style="text-align: right;">−0.23</td><td style="text-align: right;">−1.23</td><td style="text-align: right;">+0.76</td><td style="text-align: right;">+1.47</td></tr>
+<tr><td colspan="6"><strong>Loss-realizing close</strong>&nbsp;&nbsp;<span style="font-weight:400;color:#687773">taker volume $B, Q1 to Q5: 50.4 | 45.8 | 53.2 | 52.4 | 49.1</span></td></tr>
+<tr><td>+5 min</td><td style="text-align: right;">+1.67</td><td style="text-align: right;">+1.25</td><td style="text-align: right;">+0.40</td><td style="text-align: right;">−0.21</td><td style="text-align: right;">−0.65</td></tr>
+<tr><td>+30 min</td><td style="text-align: right;">−0.36</td><td style="text-align: right;">+2.54</td><td style="text-align: right;">+1.57</td><td style="text-align: right;">+0.10</td><td style="text-align: right;">+0.47</td></tr>
+<tr><td>+60 min</td><td style="text-align: right;">−2.81</td><td style="text-align: right;">+1.62</td><td style="text-align: right;">+1.16</td><td style="text-align: right;">−1.70</td><td style="text-align: right;">+0.38</td></tr>
+<tr><td>+120 min</td><td style="text-align: right;">−0.40</td><td style="text-align: right;">+5.51</td><td style="text-align: right;">+3.64</td><td style="text-align: right;">+0.33</td><td style="text-align: right;">+1.41</td></tr>
+</tbody>
+</table>
+<p><strong>Panel B. Price-impact component, bps of the purpose’s taker volume</strong></p>
+<table>
+<thead>
+<tr><th>Horizon</th><th style="text-align: right;">Q1</th><th style="text-align: right;">Q2</th><th style="text-align: right;">Q3</th><th style="text-align: right;">Q4</th><th style="text-align: right;">Q5</th></tr>
+</thead>
+<tbody>
+<tr><td colspan="6"><strong>Opening</strong>&nbsp;&nbsp;<span style="font-weight:400;color:#687773">taker volume $B, Q1 to Q5: 98.2 | 99.4 | 98.9 | 98.3 | 96.9</span></td></tr>
+<tr><td>−10 min, before the fill</td><td style="text-align: right;">−5.52</td><td style="text-align: right;">−4.69</td><td style="text-align: right;">−5.74</td><td style="text-align: right;">−4.90</td><td style="text-align: right;">−3.03</td></tr>
+<tr><td>+5 min</td><td style="text-align: right;">+2.76</td><td style="text-align: right;">+2.56</td><td style="text-align: right;">+2.27</td><td style="text-align: right;">+1.63</td><td style="text-align: right;">+1.56</td></tr>
+<tr><td>+30 min</td><td style="text-align: right;">+4.03</td><td style="text-align: right;">+2.60</td><td style="text-align: right;">+1.28</td><td style="text-align: right;">+1.13</td><td style="text-align: right;">+0.37</td></tr>
+<tr><td>+120 min</td><td style="text-align: right;">+4.80</td><td style="text-align: right;">+0.10</td><td style="text-align: right;">−2.00</td><td style="text-align: right;">−0.27</td><td style="text-align: right;">−1.63</td></tr>
+<tr><td colspan="6"><strong>Gain-realizing close</strong>&nbsp;&nbsp;<span style="font-weight:400;color:#687773">taker volume $B, Q1 to Q5: 51.6 | 51.8 | 46.2 | 43.3 | 41.0</span></td></tr>
+<tr><td>−10 min, before the fill</td><td style="text-align: right;">+3.63</td><td style="text-align: right;">+9.88</td><td style="text-align: right;">+5.12</td><td style="text-align: right;">+4.14</td><td style="text-align: right;">+6.49</td></tr>
+<tr><td>+5 min</td><td style="text-align: right;">+3.96</td><td style="text-align: right;">+3.39</td><td style="text-align: right;">+2.13</td><td style="text-align: right;">+2.47</td><td style="text-align: right;">+1.81</td></tr>
+<tr><td>+30 min</td><td style="text-align: right;">+4.50</td><td style="text-align: right;">+2.69</td><td style="text-align: right;">+1.54</td><td style="text-align: right;">+2.31</td><td style="text-align: right;">+2.15</td></tr>
+<tr><td>+120 min</td><td style="text-align: right;">+6.05</td><td style="text-align: right;">+2.36</td><td style="text-align: right;">+1.11</td><td style="text-align: right;">+3.09</td><td style="text-align: right;">+3.50</td></tr>
+<tr><td colspan="6"><strong>Loss-realizing close</strong>&nbsp;&nbsp;<span style="font-weight:400;color:#687773">taker volume $B, Q1 to Q5: 50.4 | 45.8 | 53.2 | 52.4 | 49.1</span></td></tr>
+<tr><td>−10 min, before the fill</td><td style="text-align: right;">−33.11</td><td style="text-align: right;">−31.12</td><td style="text-align: right;">−32.48</td><td style="text-align: right;">−33.30</td><td style="text-align: right;">−33.73</td></tr>
+<tr><td>+5 min</td><td style="text-align: right;">+4.97</td><td style="text-align: right;">+4.04</td><td style="text-align: right;">+3.44</td><td style="text-align: right;">+2.42</td><td style="text-align: right;">+2.10</td></tr>
+<tr><td>+30 min</td><td style="text-align: right;">+2.93</td><td style="text-align: right;">+5.29</td><td style="text-align: right;">+4.62</td><td style="text-align: right;">+2.72</td><td style="text-align: right;">+3.20</td></tr>
+<tr><td>+120 min</td><td style="text-align: right;">+2.88</td><td style="text-align: right;">+8.17</td><td style="text-align: right;">+6.67</td><td style="text-align: right;">+2.93</td><td style="text-align: right;">+4.08</td></tr>
+</tbody>
+</table>
+<p class="tnote"><em>Notes.</em> September 27, 2025 to June 30, 2026, 10 coins, October 10 excluded. Front-end taker fills only; liquidation and ADL orders are not a voluntary purpose and are excluded. Markout at horizon h is the price move from the fill price to the mid h minutes later, signed in the trade’s direction, summed over the bucket and divided by the bucket’s notional. The price-impact component measures the same move from the mid at the trade rather than from the fill price, so markout equals price impact plus execution cost, and the −10 minute row is the move over the 10 minutes before the fill on the same sign convention. <span class="src">Source <code>equal_vol_volweighted_lifetime_median_grouped_trade/retail/tables/taker_m_by_horizon_trade_type.csv</code> and <code>taker_timing_by_horizon_trade_type.csv</code>, scope <code>agg</code>.</span></p>
+<h3 id="appendix-figure-a.-timing-by-horizon">Appendix Figure A. Front-End Taker Price Impact by Horizon, Trade Purpose and Leverage Cohort</h3>
+<p>The figure behind Appendix Table C. The cohorts lie on a single line before the fill in all three panels and fan out after it in the opening panel only.</p>
+<figure><img src="figs/lev_timing_purpose_retail.png" alt="Front-end taker price impact by horizon, trade purpose and leverage cohort"></figure>
+<p class="figcap"><strong>Appendix Figure A. Front-end taker price impact by horizon, trade purpose and leverage cohort.</strong> Volume-weighted price impact in basis points against the horizon, from 10 minutes before the fill to 120 minutes after it, signed in the trade’s direction; the shaded band left of the dashed line is the pre-trade window. Panels split the flow into opening trades, gain-realizing closes and loss-realizing closes. Ten coins pooled, September 27, 2025 to June 30, 2026, October 10 excluded. <span class="src">Source <code>equal_vol_percoin_coinuser_grouped_trade/retail/agg/taker_timing_by_horizon_trade_type.png</code>.</span></p>
+<h3 id="appendix-figure-b.-cumulative-markout-frontend">Appendix Figure B. Cumulative M₁₂₀ of Front-End Traders by Leverage Cohort</h3>
+<p>The loss accumulates through the sample rather than in a few events, and it accrues on both sides of the book. Cumulated day by day, the three highest-leverage cohorts are below zero from the first weeks and fall at a steady rate to roughly −$45 million each by the end of the window, while Q1 ends near zero. The taker and maker panels separate where the loss is taken: the taker book carries most of it for every cohort, and the maker book adds a smaller loss that also runs with leverage.</p>
+<figure><img src="figs/lev_cum_m120_retail.png" alt="Cumulative 120-minute markout of front-end traders by leverage cohort"></figure>
+<p class="figcap"><strong>Appendix Figure B. Cumulative M₁₂₀ of front-end traders by leverage cohort.</strong> Top row: the running sum of M₁₂₀ in millions of dollars against calendar date, for all fills, taker fills and maker fills. Bottom row: the same running sum divided by the running sum of notional, in basis points, so the level is a volume-weighted average cost per dollar traded; the first weeks are noisy because the denominator is small. Ten coins, September 27, 2025 to June 30, 2026, October 10 excluded. <span class="src">Source <code>equal_vol_percoin_coinuser_grouped_trade/retail/agg/cumulative_m120_and_bps.png</code>.</span></p>
+<h3 id="appendix-figures-c-d.-cumulative-markout-by-group">Appendix Figures C and D. Cumulative M₁₂₀ of Algorithmic Market Makers and Algorithmic Takers by Leverage Cohort</h3>
+<p>The steady, leverage-ordered accumulation of Appendix Figure B is a front-end pattern. Cutting the two algorithmic groups on their own leverage puts their cohorts within a narrow band of each other and in an order that is not the leverage order. Two features of the cut explain that. Their leverage spans a far narrower range: the market-maker cohort boundaries run from k = 0.012 to 0.031, all of which sits inside the front-end Q1 band. And the cohorts are concentrated in a few firms, with the five largest wallets holding 43% to 91% of a cohort’s taker volume in 9 of the 10 cohorts, so a cohort line reads as one firm’s behaviour rather than a leverage treatment.</p>
+<figure><img src="figs/lev_cum_m120_mm.png" alt="Cumulative 120-minute markout of algorithmic market makers by leverage cohort"></figure>
+<p class="figcap"><strong>Appendix Figure C. Algorithmic market makers.</strong> Axes, panels and cohort construction as in Appendix Figure B, cut on this group’s own equal-volume leverage quintiles. <span class="src">Source <code>equal_vol_percoin_coinuser_grouped_trade/mm/agg/cumulative_m120_and_bps.png</code>.</span></p>
+<figure><img src="figs/lev_cum_m120_algo.png" alt="Cumulative 120-minute markout of algorithmic takers by leverage cohort"></figure>
+<p class="figcap"><strong>Appendix Figure D. Algorithmic takers.</strong> Axes, panels and cohort construction as in Appendix Figure B, cut on this group’s own equal-volume leverage quintiles. <span class="src">Source <code>equal_vol_percoin_coinuser_grouped_trade/algo/agg/cumulative_m120_and_bps.png</code>.</span></p>
+<p class="tnote"><span class="todo">Appendix Figures A, B, C and D use an orange ramp. The section’s convention is one hue per group, purple for front-end, blue for algorithmic takers, green for market makers. Repalette before publication, and relabel their “timing” axes as price impact.</span></p>
+</main><script>(function(){var b=document.body,n=document.getElementById('sidebar'),t=document.getElementById('navtoggle'),K='lev-nav';function set(open,store){n.classList.toggle('collapsed',!open);b.classList.toggle('nav-collapsed',!open);t.setAttribute('aria-expanded',open?'true':'false');t.textContent=open?'✕':'☰';if(store){try{localStorage.setItem(K,open?'open':'closed')}catch(e){}}}var v=null;try{v=localStorage.getItem(K)}catch(e){}set(v?v==='open':window.innerWidth>900,false);t.addEventListener('click',function(){set(n.classList.contains('collapsed'),true)});})();</script><p style="font-size:0.85em;color:#555;margin-top:2.5em;border-top:1px solid #ddd;padding-top:0.8em">Rebuilt 2026-09-22 on the new cohort split (k from k_by_day_v6 with flagged rows removed and the Allium-anchored 2025-09-28 to 10-19 days; Retail boundaries 0.097 / 0.150 / 0.251 / 0.382; 298,265 front-end wallets). Figures, Tables L1 to L4, Appendix Tables A and C and the sentences quoting them are from this build. Not rebuilt and kept from the published version: the two trade-purpose execution tables, the three-group liquidation-loss shares and ADL totals, Appendix Table B, the fee-regression coefficients, the wallet-life dollar figures in the closing paragraphs, and the 0.31% reconciliation error.</p></body></html>
